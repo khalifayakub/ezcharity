@@ -1,13 +1,15 @@
-Guest Book
+EZ Charity
 ==========
 
-[![Build Status](https://travis-ci.com/near-examples/guest-book.svg?branch=master)](https://travis-ci.com/near-examples/guest-book)
+#Project Description
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/near-examples/guest-book)
+This project is a simple application that makes
+use of smart contract written in assemblyscript and
+frontend using react to deliver a charity application.
+The user is able to donate to the dogs available on
+the site so they be fed. Be kind :)
 
-<!-- MAGIC COMMENT: DO NOT DELETE! Everything above this line is hidden on NEAR Examples page -->
-
-Sign in with [NEAR] and add a message to the guest book! A starter app built with an [AssemblyScript] backend and a [React] frontend.
+Sign in with [NEAR] and donate money to the dogs! A NCD app built with an [AssemblyScript] backend and a [React] frontend.
 
 
 Quick Start
@@ -114,4 +116,3 @@ As you can see in `package.json`, this does two things:
   [near-cli]: https://github.com/near/near-cli
   [CLI]: https://www.w3schools.com/whatis/whatis_cli.asp
   [create-near-app]: https://github.com/near/create-near-app
-  [gh-pages]: https://github.com/tschaub/gh-pages

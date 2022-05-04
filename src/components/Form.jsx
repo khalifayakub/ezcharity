@@ -3,21 +3,36 @@ import PropTypes from 'prop-types';
 import Big from 'big.js';
 
 export default function Form({ onSubmit, currentUser }) {
+
+  const options = [
+    { value: 'doggo-1', label: 'Plumpkin' },
+    { value: 'doggo-2', label: 'Bubbles' },
+    { value: 'doggo-3', label: 'Penandes' },
+    { value: 'doggo-4', label: 'Plugh' },
+    { value: 'doggo-5', label: 'Bante' },
+  ];
+
+  const [value, setValue] = React.useState('Plumpkin');
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+
+
   return (
     <form onSubmit={onSubmit}>
       <fieldset id="fieldset">
-        <p>Sign the guest book, { currentUser.accountId }!</p>
+        <p>Feed the dogs, { currentUser.accountId }!</p>
         <p className="highlight">
-          <label htmlFor="message">Message:</label>
-          <input
-            autoComplete="off"
-            autoFocus
-            id="message"
-            required
-          />
+          <label htmlFor="dog">Dog:</label>
+          <select id="dog" value={value} onChange={handleChange}>
+            {options.map((option) => (
+              <option value={option.value}>{option.label}</option>
+            ))}
+          </select>
         </p>
         <p>
-          <label htmlFor="donation">Donation (optional):</label>
+          <label htmlFor="donation">Donation:</label>
           <input
             autoComplete="off"
             defaultValue={'0'}
@@ -30,7 +45,7 @@ export default function Form({ onSubmit, currentUser }) {
           <span title="NEAR Tokens">Ⓝ</span>
         </p>
         <button type="submit">
-          Sign
+          Donate
         </button>
       </fieldset>
     </form>

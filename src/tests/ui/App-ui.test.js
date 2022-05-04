@@ -11,8 +11,8 @@ const contract = {
     accountId: 'test.near'
   },
   contractId: 'test.near',
-  getMessages: () => new Promise(() => {}),
-  addMessage: () => ''
+  getDonations: () => new Promise(() => {}),
+  addDonation: () => ''
 };
 const walletConnection = {
   account: () => ({ _state: { amount: '1' + '0'.repeat(25) } }),
@@ -53,5 +53,5 @@ it('renders with proper title', () => {
 
   const testInstance = testRenderer.root;
 
-  expect(testInstance.findByType('h1').children).toEqual(['NEAR Guest Book']);
+  expect(testInstance.findByType('h1').children).toEqual(['EZ charity']);
 });

@@ -4,48 +4,47 @@ import PropTypes from 'prop-types';
 import Big from 'big.js';
 import Form from './components/Form';
 import SignIn from './components/SignIn';
-import Messages from './components/Messages';
+import Donations from './components/Donations';
 
 const SUGGESTED_DONATION = '0';
 const BOATLOAD_OF_GAS = Big(3).times(10 ** 13).toFixed();
 
 const App = ({ contract, currentUser, nearConfig, wallet }) => {
-  const [messages, setMessages] = useState([]);
+  const [donations, setDonations] = useState([]);
 
   useEffect(() => {
     // TODO: don't just fetch once; subscribe!
-    contract.getMessages().then(setMessages);
+    contract.getDonations().then(setDonations);
   }, []);
 
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const { fieldset, message, donation } = e.target.elements;
-
+    const { fieldset, dog, donation } = e.target.elements;
     fieldset.disabled = true;
 
     // TODO: optimistically update page with new message,
     // update blockchain data in background
     // add uuid to each message, so we know which one is already known
-    contract.addMessage(
-      { text: message.value },
+    contract.addDonation(
+      { doggoId: dog.value },
       BOATLOAD_OF_GAS,
       Big(donation.value || '0').times(10 ** 24).toFixed()
     ).then(() => {
-      contract.getMessages().then(messages => {
-        setMessages(messages);
-        message.value = '';
+      contract.getDonations().then(donations => {
+        setDonations(donations);
+        dog.value = '';
         donation.value = SUGGESTED_DONATION;
         fieldset.disabled = false;
-        message.focus();
+        dog.focus();
       });
     });
   };
 
   const signIn = () => {
     wallet.requestSignIn(
-      {contractId: nearConfig.contractName, methodNames: [contract.addMessage.name]}, //contract requesting access
-      'NEAR Guest Book', //optional name
+      {contractId: nearConfig.contractName, methodNames: [contract.addDonation.name]}, //contract requesting access
+      'EZ charity', //optional name
       null, //optional URL to redirect to if the sign in was successful
       null //optional URL to redirect to if the sign in was NOT successful
     );
@@ -59,7 +58,7 @@ const App = ({ contract, currentUser, nearConfig, wallet }) => {
   return (
     <main>
       <header>
-        <h1>NEAR Guest Book</h1>
+        <h1>EZ charity</h1>
         { currentUser
           ? <button onClick={signOut}>Log out</button>
           : <button onClick={signIn}>Log in</button>
@@ -69,15 +68,15 @@ const App = ({ contract, currentUser, nearConfig, wallet }) => {
         ? <Form onSubmit={onSubmit} currentUser={currentUser} />
         : <SignIn/>
       }
-      { !!currentUser && !!messages.length && <Messages messages={messages}/> }
+      { !!currentUser && <Donations donations={donations}/> }
     </main>
   );
 };
 
 App.propTypes = {
   contract: PropTypes.shape({
-    addMessage: PropTypes.func.isRequired,
-    getMessages: PropTypes.func.isRequired
+    addDonation: PropTypes.func.isRequired,
+    getDonations: PropTypes.func.isRequired
   }).isRequired,
   currentUser: PropTypes.shape({
     accountId: PropTypes.string.isRequired,
